@@ -1,0 +1,52 @@
+  
+  
+  .container { 
+    display: flex;
+    flex-direction:row;
+    align-items: flex-start;
+  }
+
+  .nav{
+    margin-right: 20px;
+    color: #4c4a37; font-family: ‘Source Sans Pro’, sans-serif; font-size: 18px; line-height: 32px;
+  }
+
+  .text {
+    margin-right: 10px;
+  }
+
+  .img {
+    float: right;
+  }
+
+  p {
+    color: #4c4a37; font-family: ‘Source Sans Pro’, sans-serif; font-size: 18px; line-height: 32px; margin: 0 0 24px;
+  }
+  
+  a:hover {    
+    color: #3a7999;
+    background: rgba(0,0,0,0);
+  }
+
+  .info{
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .navbar-toggler{
+    background: #3a7999;
+  }
+
+  @media screen and (max-width: 760px) {
+    .container { 
+      display: flex;
+      flex-direction:column;
+      
+    }
+}
+
+
+  
+
+
+   
