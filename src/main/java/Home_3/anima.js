@@ -1,11 +1,26 @@
 let a = document.getElementById("one");
-console.log(parseInt(a.style.marginTop))
-setInterval(moveDown, 20);
+var count = 0;
+console.log(parseInt(a.style.marginTop));
+
+setInterval(moveDown, 15);
+
 
 function moveDown(){
-    a.style.marginTop = parseInt(a.style.marginTop) + 3 + 'px';
-    if (isHidden(a)){
-        a.style.marginTop = 10 + 'px';
+    if (count % 2 == 0) {
+        a.style.marginTop = parseInt(a.style.marginTop) + 2 + 'px';
+        if (isHidden(a)) {
+            count++;
+            console.log(count, "down")
+        }
+    }
+    else{
+        a.style.marginTop = parseInt(a.style.marginTop) - 2 + 'px';
+        console.log(a.style.marginTop)
+        if (a.style.marginTop === "0px") {
+            count++;
+            console.log(count, "up")
+            console.log(a.style.marginTop)
+        }
     }
 }
 
@@ -18,15 +33,6 @@ function isHidden(element){
     const elementHides = elementHidesUp || elementHidesLeft || elementHidesDown || elementHidesRight;
     return elementHides;
 }
-function countHidden(element){
-    const elementRect = element.getBoundingClientRect();
-    const elementHides = {
-        up: Math.max(0,0 - elementRect.top),
-        left: Math.max(0,0 - elementRect.left),
-        down: Math.max(0,elementRect.bottom - window.innerHeight),
-        right: Math.max(0,elementRect.right - window.innerWidth)
-    };
-    return elementHides;
-}
+
 
 
