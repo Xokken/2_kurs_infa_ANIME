@@ -4,63 +4,94 @@ var ctx = canvas.getContext('2d');
 var mouseX = 0;
 var mouseY = 0;
 
-var xx = 0;
-var yy = 0;
+var paintX = 0;
+var paintY = 0;
+
+var bufX = 900;
+var bufY = 200;
 
 orbit(ctx);
+ctx.arc(bufX, bufY, 10, 0, 2 * Math.PI);
+ctx.fillStyle = "black";
+ctx.fill();
+ctx.beginPath();
+
+ctx.arc(bufX + 100, bufY, 10, 0, 2 * Math.PI);
+ctx.fillStyle = "black";
+ctx.fill();
+ctx.beginPath();
+
 canvas.addEventListener("mousemove", setMousePosition, false);
 
 function setMousePosition(e) {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    apple();
-    ctx.clearRect(0, 0, 1000, 1000);
+    ctx.clearRect(0, 0, 2000, 2000);
     orbit(ctx);
     apple();
 }
 
 function orbit(ctx) {
     ctx.beginPath();
-    ctx.arc(100, 100, 50, 0, 2 * Math.PI);
+    ctx.arc(bufX, bufY, 50, 0, 2 * Math.PI);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(200, 100, 50, 0, 2 * Math.PI);
+    ctx.arc(bufX + 100, bufY, 50, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.beginPath();
 }
 
 function apple(){
-    countXY(mouseX - 100, mouseY - 100, 30);
-    ctx.arc(xx + 100, yy + 100, 10, 0, 2 * Math.PI);
-    ctx.fillStyle = "black";
-    ctx.fill();
-    ctx.beginPath();
+    countXY(mouseX - bufX, mouseY - bufY, 40);
+    if (((mouseX - bufX) * (mouseX - bufX) + (mouseY - bufY) * (mouseY - bufY)) >= 2000) {
+        ctx.arc(paintX + bufX, paintY + bufY, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "black";
+        ctx.fill();
+        ctx.beginPath();
+    }
+    else{
+        ctx.arc(mouseX, mouseY, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "black";
+        ctx.fill();
+        ctx.beginPath();
+    }
 
-    countXY(mouseX - 200, mouseY - 100, 30);
-    ctx.arc(xx + 200, yy + 100, 10, 0, 2 * Math.PI);
-    ctx.fillStyle = "black";
-    ctx.fill();
-    ctx.beginPath();
+    countXY(mouseX - bufX - 100, mouseY - bufY, 40);
+
+    if (((mouseX - bufX - 100) * (mouseX - bufX - 100) + (mouseY - bufY) * (mouseY - bufY)) >= 2000) {
+        ctx.arc(paintX + bufX + 100, paintY + bufY, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "black";
+        ctx.fill();
+        ctx.beginPath();
+    }
+    else{
+        ctx.arc(mouseX, mouseY, 10, 0, 2 * Math.PI);
+        ctx.fillStyle = "black";
+        ctx.fill();
+        ctx.beginPath();
+    }
+
+
 }
 
 
+
 function countXY(x1, y1, r) {
-    x12 = (x1 * r) / Math.sqrt(x1 * x1 + y1 * y1);
-    y12 = (y1 * r) / Math.sqrt(x1 * x1 + y1 * y1);
-    x22 = -1 * (x1 * r) / Math.sqrt(x1 * x1 + y1 * y1);
-    y22 = -1 * (y1 * r) / Math.sqrt(x1 * x1 + y1 * y1);
-    //console.log(x12, y12, x22, y22);
-    buf1 = ((x1 - x12) * (x1 - x12) + (y1 - y12) * (y1 - y12));
-    buf2 = ((x1 - x22) * (x1 - x22) + (y1 - y22) * (y1 - y22));
+    oneX = (x1 * r) / Math.sqrt(x1 * x1 + y1 * y1);
+    oneY = (y1 * r) / Math.sqrt(x1 * x1 + y1 * y1);
+    twoX = -1 * (x1 * r) / Math.sqrt(x1 * x1 + y1 * y1);
+    twoY = -1 * (y1 * r) / Math.sqrt(x1 * x1 + y1 * y1);
+    buf1 = ((x1 - oneX) * (x1 - oneX) + (y1 - oneY) * (y1 - oneY));
+    buf2 = ((x1 - twoX) * (x1 - twoX) + (y1 - twoY) * (y1 - twoY));
     console.log(buf1, buf2);
     if (buf2 < buf1) {
-        xx = x22;
-        yy = y22;
+        paintX = twoX;
+        paintY = twoY;
     }
     else{
-        xx = x12;
-        yy = y12;
+        paintX = oneX;
+        paintY = oneY;
     }
 }
 
